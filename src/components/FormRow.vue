@@ -45,30 +45,99 @@ const hadlerSelect = (event: Event) => {
 }
 </script>
 <template>
-  <div class="flex px-1 gap-3 text-xs sm:text-sm">
-    <div class="basis-1/4">
-      <input v-model="tags" @blur="handleBlur" maxlength="50" class="w-full h-full border border-solid rounded-lg px-2" />
+  <div class="grid grid-cols-12 gap-4 items-center">
+    <!-- Метки -->
+    <div class="col-span-3">
+      <input 
+        v-model="tags" 
+        @blur="handleBlur" 
+        maxlength="50" 
+        placeholder="Введите метки"
+        class="input-focus w-full h-10 bg-white/20 border border-white/30 rounded-lg px-3 text-white placeholder-white/60 focus:bg-white/30" 
+      />
     </div>
-    <div class="basis-1/4">
-      <select @click="hadlerSelect($event)" v-model="obj.type" class="w-full h-full border border-solid rounded-lg px-2 cursor-pointer">
-        <option value="">Выберите опцию</option>
-        <option @click="setNullPass(obj.type, obj.id)" v-for="option in options" :key="option.text" :value="option.text">{{ option.text }}</option>
+    
+    <!-- Тип записи -->
+    <div class="col-span-3">
+      <select 
+        @click="hadlerSelect($event)" 
+        v-model="obj.type" 
+        class="input-focus w-full h-10 bg-white/20 border border-white/30 rounded-lg px-3 text-white cursor-pointer focus:bg-white/30"
+      >
+        <option value="" class="bg-gray-800 text-white">Выберите опцию</option>
+        <option 
+          @click="setNullPass(obj.type, obj.id)" 
+          v-for="option in options" 
+          :key="option.text" 
+          :value="option.text"
+          class="bg-gray-800 text-white"
+        >
+          {{ option.text }}
+        </option>
       </select>
     </div>
-    <div class="basis-1/4">
-      <input v-model="obj.login" @blur="handleBlur" maxlength="100" class="w-full h-full border border-solid rounded-lg px-2" />
+    
+    <!-- Логин -->
+    <div class="col-span-3">
+      <input 
+        v-model="obj.login" 
+        @blur="handleBlur" 
+        maxlength="100" 
+        placeholder="Введите логин"
+        class="input-focus w-full h-10 bg-white/20 border border-white/30 rounded-lg px-3 text-white placeholder-white/60 focus:bg-white/30" 
+      />
     </div>
-    <div class="basis-1/4">
-      <input v-show="obj.type != 'Local'" @blur="handleBlur" v-model="obj.pass" type="password" maxlength="50" class="w-full h-full border border-solid rounded-lg px-2" />
+    
+    <!-- Пароль -->
+    <div class="col-span-3">
+      <input 
+        v-show="obj.type != 'Local'" 
+        @blur="handleBlur" 
+        v-model="obj.pass" 
+        type="password" 
+        maxlength="50" 
+        placeholder="Введите пароль"
+        class="input-focus w-full h-10 bg-white/20 border border-white/30 rounded-lg px-3 text-white placeholder-white/60 focus:bg-white/30" 
+      />
     </div>
-    <div class="flex basis-1 sm:justify-start justify-end">
-      <IconDelete @click="deleteData(obj.id)" class="size-3 sm:size-5 cursor-pointer mt-1" />
+    
+    <!-- Кнопка удаления -->
+    <div class="col-span-12 sm:col-span-0 flex justify-center sm:justify-end mt-2 sm:mt-0">
+      <button 
+        @click="deleteData(obj.id)" 
+        class="button-hover bg-red-500/20 hover:bg-red-500/40 border border-red-400/30 hover:border-red-400/50 text-red-300 hover:text-red-200 p-2 rounded-lg transition-all duration-300"
+      >
+        <IconDelete class="w-4 h-4" />
+      </button>
     </div>
   </div>
 </template>
 
 <style scoped>
 .error-color {
-  border-color: red;
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Кастомные стили для select */
+select option {
+  background-color: #1f2937;
+  color: white;
+}
+
+/* Стили для placeholder */
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Анимация появления строки */
+.row-enter-active {
+  transition: all 0.3s ease;
+}
+
+.row-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 </style>

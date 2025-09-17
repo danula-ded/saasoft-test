@@ -3,7 +3,9 @@ import UserForm from './components/UserForm.vue'
 </script>
 
 <template>
-  <div class="flex h-[100vh] py-5">
-    <UserForm />
+  <div class="min-h-screen flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-6xl">
+      <UserForm />
+    </div>
   </div>
 </template>
