@@ -8,7 +8,7 @@ const deleteData = (id: number) => accountStore.deleteData(id)
 const setNullPass = (type: string, id: number) => accountStore.setNullPass(type, id)
 const { options } = storeToRefs(accountStore)
 
-const selectTarget = ref('')
+const selectElement = ref<HTMLElement | null>(null)
 const obj = defineModel({ type: Object })
 
 const tags = computed({
@@ -31,15 +31,16 @@ const handleBlur = (event: Event) => {
 }
 
 const hadlerSelect = (event: Event) => {
-  const target = event.target as HTMLElement
-  if (target.nodeName === 'SELECT') {
-    selectTarget.value = target
-    selectTarget.value.classList.remove('error-color')
+  const target = (event.target as HTMLElement | null)
+  if (target && target.nodeName === 'SELECT') {
+    selectElement.value = target
+    selectElement.value?.classList.remove('error-color')
   } else {
-    if (event.target.value === '') {
-      selectTarget.value.classList.add('error-color')
+    const selectTarget = event.target as HTMLSelectElement | null
+    if (selectTarget && selectTarget.value === '') {
+      selectElement.value?.classList.add('error-color')
     } else {
-      selectTarget.value.classList.remove('error-color')
+      selectElement.value?.classList.remove('error-color')
     }
   }
 }
